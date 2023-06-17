@@ -15,15 +15,7 @@ public class UserDaoJDBCImpl implements UserDao {
     private static final String deleteUserId = "DELETE FROM users WHERE id = ?";
     private static final String addUser = "INSERT INTO users (name, lastName, age) VALUES (?, ?, ?)";
 
-    private final Connection connection;
-
-    {
-        try {
-            connection = Util.getConnection();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private final Connection connection = Util.getConnection();
 
     public UserDaoJDBCImpl() {
 
@@ -74,8 +66,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>();
-        try {
-            ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM users");
+        try (ResultSet rs = connection.createStatement().executeQuery("SELECT * FROM users")) {
 
             while (rs.next()) {
                 User user = new User();
