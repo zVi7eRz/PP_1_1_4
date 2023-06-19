@@ -58,7 +58,7 @@ public class Util {
             Class.forName(driver);
             connection = DriverManager.getConnection(connectionUrl, userName, password);
             System.out.println("Connected");
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException ignored) {
         }
         return connection;
     }
